@@ -1,0 +1,4 @@
+# Core ETL, SQL, ML, and NLP pipeline uses Python 3 standard library for zero-dependency portability.
+# Optional self-serve BI prototype dependencies:
+streamlit>=1.36.0
+pandas>=2.2.0

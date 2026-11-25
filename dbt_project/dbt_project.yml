@@ -1,0 +1,12 @@
+name: 'advisor_marketing_analytics'
+version: '1.0.0'
+config-version: 2
+
+profile: 'snowflake_marketing'
+
+model-paths: ["models"]
+
+models:
+  advisor_marketing_analytics:
+    marts:
+      +materialized: table

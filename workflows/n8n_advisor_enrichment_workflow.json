@@ -1,0 +1,58 @@
+{
+  "name": "Advisor CRM, Event & LLM Enrichment Orchestration",
+  "nodes": [
+    {
+      "id": "1",
+      "name": "HubSpot & Cvent Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "parameters": {
+        "path": "advisor-engagement-ingest",
+        "httpMethod": "POST",
+        "responseMode": "onReceived"
+      }
+    },
+    {
+      "id": "2",
+      "name": "Normalize Timezone UTC to America/New_York",
+      "type": "n8n-nodes-base.code",
+      "parameters": {
+        "jsCode": "return items.map(i => ({ ...i.json, event_date_est: new Date(i.json.event_ts_utc).toLocaleDateString('en-CA', { timeZone: 'America/New_York' }) }));"
+      }
+    },
+    {
+      "id": "3",
+      "name": "REST API LLM Intent & Persona Enrichment",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.internal-llm-gateway.local/v1/classify-advisor-inquiry",
+        "jsonParameters": true,
+        "bodyParametersJson": "{\"text\": \"={{$json.inquiry_text}}\", \"schema\": \"advisor_enrichment_v1\"}"
+      }
+    },
+    {
+      "id": "4",
+      "name": "Snowflake Pre-Aggregated Merge Upsert",
+      "type": "n8n-nodes-base.snowflake",
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "MERGE INTO MARKETING_ANALYTICS.CORE.STG_ADVISOR_ENRICHMENT AS t USING (SELECT :advisor_id AS advisor_id, :intent_category AS intent_category, :urgency_tier AS urgency_tier) AS s ON t.advisor_id = s.advisor_id WHEN MATCHED THEN UPDATE SET intent_category = s.intent_category, urgency_tier = s.urgency_tier WHEN NOT MATCHED THEN INSERT (advisor_id, intent_category, urgency_tier) VALUES (s.advisor_id, s.intent_category, s.urgency_tier);"
+      }
+    },
+    {
+      "id": "5",
+      "name": "Salesforce & Slack Sales Alert",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "method": "POST",
+        "url": "https://hooks.slack.com/services/T000/B000/ADVISOR_ALERTS"
+      }
+    }
+  ],
+  "connections": {
+    "HubSpot & Cvent Webhook Trigger": { "main": [[{ "node": "Normalize Timezone UTC to America/New_York", "type": "main", "index": 0 }]] },
+    "Normalize Timezone UTC to America/New_York": { "main": [[{ "node": "REST API LLM Intent & Persona Enrichment", "type": "main", "index": 0 }]] },
+    "REST API LLM Intent & Persona Enrichment": { "main": [[{ "node": "Snowflake Pre-Aggregated Merge Upsert", "type": "main", "index": 0 }]] },
+    "Snowflake Pre-Aggregated Merge Upsert": { "main": [[{ "node": "Salesforce & Slack Sales Alert", "type": "main", "index": 0 }]] }
+  }
+}

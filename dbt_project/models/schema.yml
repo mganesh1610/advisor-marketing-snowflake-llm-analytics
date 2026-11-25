@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: mart_advisor_single_view
+    description: "Governed single view of the advisor unifying CRM, email/web campaigns, and event attendance without join fan-out."
+    columns:
+      - name: advisor_id
+        description: "Deterministic deduplicated advisor surrogate key."
+        tests:
+          - unique
+          - not_null
+      - name: last_touch_date_est
+        description: "Most recent marketing touch normalized from UTC to America/New_York business date."
+      - name: pipeline_influence_usd
+        description: "Pre-aggregated post-event pipeline influence in USD (fan-out protected)."
+        tests:
+          - not_null

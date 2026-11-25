@@ -1,0 +1,5 @@
+segment_id,accounts,avg_recency_months,avg_prior_spend_usd,visit_rate,conversion_rate,avg_campaign_spend_usd
+SEG_1,25883,5.99,179.14,0.1431,0.0085,0.9
+SEG_2,7762,4.77,520.97,0.1717,0.0126,1.4
+SEG_3,15018,5.66,273.74,0.1184,0.0079,1.05
+SEG_4,15337,5.99,176.17,0.1682,0.0093,1.14

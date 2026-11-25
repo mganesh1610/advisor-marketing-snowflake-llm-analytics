@@ -1,0 +1,113 @@
+{
+  "total_verified_records": 122294,
+  "dataset_hashes_sha256": {
+    "bank": "e0bf5f5de5b846e2f18e9d90606637267d46dfa260e0f17bb12e605db5efbeb4",
+    "hillstrom": "0e5893329d8b93cefecc571777672028290ab69865718020c78c7284f291aece",
+    "banking77_train": "b06e26ac675513959a63135f11b94ea7786ed02da65db93a5650d8838cbc664b",
+    "banking77_test": "d12d6e3bc4c3103966ae786dc435913c0c563dfa328f5a3646d0e62cfeeb474d"
+  },
+  "warehouse_audit": {
+    "raw_crm_rows": 2200,
+    "deduplicated_advisor_rows": 2000,
+    "distinct_mart_advisors": 2000,
+    "duplicate_crm_rows_removed": 200,
+    "utc_to_est_boundary_rollovers_fixed": 1500,
+    "true_pipeline_usd": 5560000.0,
+    "mart_preagg_pipeline_usd": 5560000.0,
+    "naive_join_fanout_pipeline_usd": 16680000.0,
+    "fanout_drift_usd": 0.0,
+    "naive_fanout_inflation_multiplier": 3.0,
+    "sqlite_integrity_ok": true
+  },
+  "propensity_model": {
+    "train_rows": 36169,
+    "test_rows": 9042,
+    "positive_base_rate": 0.1218,
+    "holdout_roc_auc": 0.7515,
+    "holdout_brier": 0.0929,
+    "top_decile_conversion_rate": 0.4458,
+    "top_decile_lift": 3.66
+  },
+  "segmentation_and_campaign_lift": {
+    "total_assignments": 64000,
+    "control_visit_rate": 0.1062,
+    "treatment_visit_rate": 0.167,
+    "visit_relative_lift_pct": 57.35,
+    "visit_z_score": 20.51,
+    "control_conversion_rate": 0.0057,
+    "treatment_conversion_rate": 0.0107,
+    "conversion_relative_lift_pct": 86.53,
+    "conversion_z_score": 6.24,
+    "kmeans_variance_explained_pct": 53.37,
+    "clusters": [
+      {
+        "segment_id": "SEG_1",
+        "accounts": 25883,
+        "avg_recency_months": 5.99,
+        "avg_prior_spend_usd": 179.14,
+        "visit_rate": 0.1431,
+        "conversion_rate": 0.0085,
+        "avg_campaign_spend_usd": 0.9
+      },
+      {
+        "segment_id": "SEG_2",
+        "accounts": 7762,
+        "avg_recency_months": 4.77,
+        "avg_prior_spend_usd": 520.97,
+        "visit_rate": 0.1717,
+        "conversion_rate": 0.0126,
+        "avg_campaign_spend_usd": 1.4
+      },
+      {
+        "segment_id": "SEG_3",
+        "accounts": 15018,
+        "avg_recency_months": 5.66,
+        "avg_prior_spend_usd": 273.74,
+        "visit_rate": 0.1184,
+        "conversion_rate": 0.0079,
+        "avg_campaign_spend_usd": 1.05
+      },
+      {
+        "segment_id": "SEG_4",
+        "accounts": 15337,
+        "avg_recency_months": 5.99,
+        "avg_prior_spend_usd": 176.17,
+        "visit_rate": 0.1682,
+        "conversion_rate": 0.0093,
+        "avg_campaign_spend_usd": 1.14
+      }
+    ],
+    "arm_summary": [
+      {
+        "arm": "Mens E-Mail",
+        "accounts": 21307,
+        "visit_rate": 0.1828,
+        "conversion_rate": 0.0125,
+        "revenue_per_account_usd": 1.42
+      },
+      {
+        "arm": "No E-Mail",
+        "accounts": 21306,
+        "visit_rate": 0.1062,
+        "conversion_rate": 0.0057,
+        "revenue_per_account_usd": 0.65
+      },
+      {
+        "arm": "Womens E-Mail",
+        "accounts": 21387,
+        "visit_rate": 0.1514,
+        "conversion_rate": 0.0088,
+        "revenue_per_account_usd": 1.08
+      }
+    ]
+  },
+  "nlp_and_llm_enrichment": {
+    "train_utterances": 10003,
+    "test_utterances": 3080,
+    "num_intents": 77,
+    "top1_accuracy_pct": 85.13,
+    "top3_accuracy_pct": 94.71,
+    "llm_json_schema_compliance_pct": 100.0,
+    "schema_valid_count": 3080
+  }
+}
